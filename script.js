@@ -6,7 +6,7 @@ const bots = [
     invite: "#",
     support: "#",
     online: true,
-    category: "moderation"
+    category: "Runescape"
   },
   {
     name: "Latitane Bot",
@@ -15,7 +15,7 @@ const bots = [
     invite: "#",
     support: "#",
     online: true,
-    category: "music"
+    category: "AlbionOnline"
   },
   {
     name: "SignUp",
@@ -24,7 +24,7 @@ const bots = [
     invite: "#",
     support: "#",
     online: false,
-    category: "fun"
+    category: "AlbionOnline"
   },
   {
     name: "Ticket Bot",
@@ -33,7 +33,7 @@ const bots = [
     invite: "#",
     support: "#",
     online: false,
-    category: "tickets"
+    category: "both"
   }
 ];
 
