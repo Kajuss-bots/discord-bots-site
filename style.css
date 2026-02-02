@@ -1,9 +1,7 @@
-/* RESET */
 * {
   box-sizing: border-box;
 }
 
-/* BODY */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -15,7 +13,7 @@ body {
 header {
   text-align: center;
   padding: 60px 20px;
-  background: radial-gradient(circle at top, #020617, #020617 40%, #020617);
+  background: #020617;
 }
 
 header h1 {
@@ -32,12 +30,13 @@ header p {
 .filters {
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
   gap: 12px;
   padding: 20px;
 }
 
 .filter {
+  appearance: none;
+  -webkit-appearance: none;
   background: #020617;
   color: #cbd5f5;
   border: none;
@@ -45,12 +44,6 @@ header p {
   border-radius: 10px;
   cursor: pointer;
   font-weight: bold;
-  transition: background 0.2s ease, transform 0.1s ease;
-}
-
-.filter:hover {
-  background: #1e293b;
-  transform: translateY(-1px);
 }
 
 .filter.active {
@@ -58,7 +51,7 @@ header p {
   color: white;
 }
 
-/* BOTS GRID */
+/* GRID */
 #bots {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -66,22 +59,16 @@ header p {
   padding: 40px;
 }
 
-/* BOT CARD */
+/* CARD */
 .bot {
   position: relative;
-  background: linear-gradient(180deg, #020617, #020617);
+  background: #020617;
   border-radius: 18px;
   padding: 30px 25px;
   text-align: center;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.bot:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-}
-
-/* STATUS DOT */
+/* STATUS */
 .status {
   width: 10px;
   height: 10px;
@@ -89,7 +76,6 @@ header p {
   position: absolute;
   top: 16px;
   right: 16px;
-  z-index: 5;
 }
 
 .online {
@@ -112,7 +98,6 @@ header p {
 /* TEXT */
 .bot h2 {
   margin: 10px 0 6px;
-  font-size: 1.25rem;
 }
 
 .bot p {
@@ -134,16 +119,10 @@ header p {
   text-decoration: none;
   border-radius: 10px;
   font-weight: bold;
-  transition: opacity 0.15s ease, transform 0.15s ease;
 }
 
 .bot a.secondary {
   background: #334155;
-}
-
-.bot a:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
 }
 
 /* FOOTER */
@@ -151,5 +130,4 @@ footer {
   text-align: center;
   padding: 24px;
   color: #64748b;
-  font-size: 0.9rem;
 }
