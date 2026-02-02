@@ -46,12 +46,13 @@ header p {
 }
 
 .status {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  background: red !important;
   position: absolute;
-  top: 15px;
-  right: 15px;
+  top: 0;
+  right: 0;
+  z-index: 9999;
 }
 
 .online {
@@ -107,3 +108,4 @@ footer {
   padding: 20px;
   color: #64748b;
 }
+
