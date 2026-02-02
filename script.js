@@ -8,6 +8,8 @@ async function loadStatus() {
   const res = await fetch("status.json?_=" + Date.now());
   const data = await res.json();
   bots = data.bots;
+
+  updateFilterCounts();
   renderBots(currentCategory);
 }
 
@@ -35,7 +37,24 @@ function renderBots(category) {
   });
 }
 
-/* FILTERS */
+/* 🧠 BOT COUNT */
+function updateFilterCounts() {
+  filterButtons.forEach(btn => {
+    const category = btn.dataset.category;
+
+    let count;
+    if (category === "all") {
+      count = bots.length;
+    } else {
+      count = bots.filter(bot => bot.category === category).length;
+    }
+
+    const baseText = btn.textContent.split(" (")[0];
+    btn.textContent = `${baseText} (${count})`;
+  });
+}
+
+/* FILTER CLICKS */
 filterButtons.forEach(btn => {
   btn.addEventListener("click", () => {
     document.querySelector(".filter.active").classList.remove("active");
@@ -48,5 +67,5 @@ filterButtons.forEach(btn => {
 /* INITIAL LOAD */
 loadStatus();
 
-/* AUTO REFRESH kas 15s */
+/* AUTO REFRESH kas 15 s */
 setInterval(loadStatus, 15000);
