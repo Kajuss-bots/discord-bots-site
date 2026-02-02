@@ -46,22 +46,22 @@ header p {
 }
 
 .status {
-  width: 20px;
-  height: 20px;
-  background: red !important;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
   position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 9999;
+  top: 14px;
+  right: 14px;
+  z-index: 5;
 }
 
 .online {
   background: #22c55e;
-  box-shadow: 0 0 8px #22c55e;
+  box-shadow: 0 0 6px #22c55e;
 }
 
 .offline {
-  background: #64748b;
+  background: #94a3b8;
 }
 
 .bot img {
@@ -108,4 +108,5 @@ footer {
   padding: 20px;
   color: #64748b;
 }
+
 
