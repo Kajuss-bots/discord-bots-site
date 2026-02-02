@@ -1,0 +1,49 @@
+{
+  "bots": [
+    {
+      "name": "Crazy Lithuanians",
+      "description": "Tickets / level / links / Weekly clan xp",
+      "avatar": "https://cdn-icons-png.flaticon.com/512/4712/4712109.png",
+      "invite": "#",
+      "support": "#",
+      "online": true,
+      "category": "Runescape"
+    },
+    {
+      "name": "Latitane Bot",
+      "description": "Siphoned energy + sell functions.",
+      "avatar": "https://cdn-icons-png.flaticon.com/512/4712/4712139.png",
+      "invite": "#",
+      "support": "#",
+      "online": true,
+      "category": "AlbionOnline"
+    },
+    {
+      "name": "SignUp",
+      "description": "SignUp for mass. /signup",
+      "avatar": "https://cdn-icons-png.flaticon.com/512/4712/4712166.png",
+      "invite": "#",
+      "support": "#",
+      "online": true,
+      "category": "AlbionOnline"
+    },
+    {
+      "name": "Ticket Bot",
+      "description": "Bot with Ticket system",
+      "avatar": "https://cdn-icons-png.flaticon.com/512/4712/4712187.png",
+      "invite": "#",
+      "support": "#",
+      "online": true,
+      "category": "both"
+    },
+    {
+      "name": "Crafting Bot",
+      "description": "Bot will help you calculate craft and refine",
+      "avatar": "https://cdn-icons-png.flaticon.com/512/4712/4712166.png",
+      "invite": "#",
+      "support": "#",
+      "online": true,
+      "category": "AlbionOnline"
+    }
+  ]
+}

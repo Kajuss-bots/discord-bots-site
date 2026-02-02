@@ -1,44 +1,15 @@
-const bots = [
-  {
-    name: "Crazy Lithuanians",
-    description: "Tickets / level / links / monthly clan xp",
-    avatar: "https://cdn-icons-png.flaticon.com/512/4712/4712109.png",
-    invite: "#",
-    support: "#",
-    online: true,
-    category: "Runescape"
-  },
-  {
-    name: "Latitane Bot",
-    description: "Siphoned energy + sell functions.",
-    avatar: "https://cdn-icons-png.flaticon.com/512/4712/4712139.png",
-    invite: "#",
-    support: "#",
-    online: true,
-    category: "AlbionOnline"
-  },
-  {
-    name: "SignUp",
-    description: "SignUp for mass. /signup",
-    avatar: "https://cdn-icons-png.flaticon.com/512/4712/4712166.png",
-    invite: "#",
-    support: "#",
-    online: false,
-    category: "AlbionOnline"
-  },
-  {
-    name: "Ticket Bot",
-    description: "Bot with Ticket system",
-    avatar: "https://cdn-icons-png.flaticon.com/512/4712/4712187.png",
-    invite: "#",
-    support: "#",
-    online: false,
-    category: "both"
-  }
-];
+let bots = [];
+let currentCategory = "all";
 
 const botsContainer = document.getElementById("bots");
 const filterButtons = document.querySelectorAll(".filter");
+
+async function loadStatus() {
+  const res = await fetch("status.json?_=" + Date.now());
+  const data = await res.json();
+  bots = data.bots;
+  renderBots(currentCategory);
+}
 
 function renderBots(category) {
   botsContainer.innerHTML = "";
@@ -64,14 +35,18 @@ function renderBots(category) {
   });
 }
 
-/* FILTER CLICKS */
+/* FILTERS */
 filterButtons.forEach(btn => {
   btn.addEventListener("click", () => {
     document.querySelector(".filter.active").classList.remove("active");
     btn.classList.add("active");
-    renderBots(btn.dataset.category);
+    currentCategory = btn.dataset.category;
+    renderBots(currentCategory);
   });
 });
 
-/* INITIAL LOAD — SVARBIAUSIA */
-renderBots("all");
+/* INITIAL LOAD */
+loadStatus();
+
+/* AUTO REFRESH kas 15s */
+setInterval(loadStatus, 15000);
