@@ -1,5 +1,5 @@
-let bots = [];
 let metaBots = [];
+let bots = [];
 let currentCategory = "all";
 
 const botsContainer = document.getElementById("bots");
@@ -7,34 +7,47 @@ const filterButtons = document.querySelectorAll(".filter");
 
 const API_URL = "https://discord-bots-api.onrender.com/status";
 
-/* LOAD METADATA */
+/* =========================
+   LOAD METADATA
+========================= */
 async function loadMeta() {
   const res = await fetch("status.json?_=" + Date.now());
   const data = await res.json();
   metaBots = data.bots;
 }
 
-/* LOAD REAL STATUS */
+/* =========================
+   LOAD REAL STATUS FROM API
+========================= */
 async function loadStatus() {
-  const res = await fetch(API_URL);
-  const data = await res.json();
+  try {
+    const res = await fetch(API_URL);
+    const data = await res.json();
 
-  bots = metaBots.map(meta => {
-    const apiBot = data.bots.find(b => b.id === meta.id);
+    bots = metaBots.map(meta => {
+      const apiBot = data.bots.find(b => b.id === meta.id);
 
-    return {
-      ...meta,
-      online: apiBot ? apiBot.online : false,
-      avatar: apiBot
-        ? apiBot.avatar
-        : "https://cdn.discordapp.com/embed/avatars/0.png"
-    };
-  });
+      return {
+        ...meta,
+        online: apiBot ? apiBot.online : false,
+        avatar:
+          apiBot && apiBot.avatar
+            ? apiBot.avatar
+            : `https://cdn.discordapp.com/embed/avatars/${Math.floor(
+                Math.random() * 6
+              )}.png`
+      };
+    });
 
-  renderBots(currentCategory);
+    renderBots(currentCategory);
+  } catch (err) {
+    console.error("API error:", err);
+  }
 }
 
-/* RENDER */
+/* =========================
+   RENDER BOTS
+========================= */
 function renderBots(category) {
   botsContainer.innerHTML = "";
 
@@ -46,7 +59,7 @@ function renderBots(category) {
 
     div.innerHTML = `
       <div class="status ${bot.online ? "online" : "offline"}"></div>
-      <img src="${bot.avatar}">
+      <img src="${bot.avatar}" alt="${bot.name}">
       <h2>${bot.name}</h2>
       <p>${bot.description}</p>
       <div class="buttons">
@@ -59,19 +72,23 @@ function renderBots(category) {
   });
 }
 
-/* FILTERS */
+/* =========================
+   FILTERS
+========================= */
 filterButtons.forEach(btn => {
   btn.addEventListener("click", () => {
-    document.querySelector(".filter.active").classList.remove("active");
+    document.querySelector(".filter.active")?.classList.remove("active");
     btn.classList.add("active");
     currentCategory = btn.dataset.category;
     renderBots(currentCategory);
   });
 });
 
-/* INIT */
+/* =========================
+   INIT
+========================= */
 (async () => {
   await loadMeta();
   await loadStatus();
-  setInterval(loadStatus, 15000);
+  setInterval(loadStatus, 15000); // auto refresh
 })();
