@@ -1,18 +1,40 @@
 let bots = [];
+let metaBots = [];
 let currentCategory = "all";
 
 const botsContainer = document.getElementById("bots");
 const filterButtons = document.querySelectorAll(".filter");
 
-async function loadStatus() {
+const API_URL = "https://discord-bots-api.onrender.com/status";
+
+/* LOAD METADATA */
+async function loadMeta() {
   const res = await fetch("status.json?_=" + Date.now());
   const data = await res.json();
-  bots = data.bots;
+  metaBots = data.bots;
+}
 
-  updateFilterCounts();
+/* LOAD REAL STATUS */
+async function loadStatus() {
+  const res = await fetch(API_URL);
+  const data = await res.json();
+
+  bots = metaBots.map(meta => {
+    const apiBot = data.bots.find(b => b.id === meta.id);
+
+    return {
+      ...meta,
+      online: apiBot ? apiBot.online : false,
+      avatar: apiBot
+        ? apiBot.avatar
+        : "https://cdn.discordapp.com/embed/avatars/0.png"
+    };
+  });
+
   renderBots(currentCategory);
 }
 
+/* RENDER */
 function renderBots(category) {
   botsContainer.innerHTML = "";
 
@@ -28,8 +50,8 @@ function renderBots(category) {
       <h2>${bot.name}</h2>
       <p>${bot.description}</p>
       <div class="buttons">
-        <a href="${bot.invite}">Invite</a>
-        <a href="${bot.support}" class="secondary">Support</a>
+        <a href="${bot.invite}" target="_blank">Invite</a>
+        <a href="${bot.support}" target="_blank" class="secondary">Support</a>
       </div>
     `;
 
@@ -37,24 +59,7 @@ function renderBots(category) {
   });
 }
 
-/* 🧠 BOT COUNT */
-function updateFilterCounts() {
-  filterButtons.forEach(btn => {
-    const category = btn.dataset.category;
-
-    let count;
-    if (category === "all") {
-      count = bots.length;
-    } else {
-      count = bots.filter(bot => bot.category === category).length;
-    }
-
-    const baseText = btn.textContent.split(" (")[0];
-    btn.textContent = `${baseText} (${count})`;
-  });
-}
-
-/* FILTER CLICKS */
+/* FILTERS */
 filterButtons.forEach(btn => {
   btn.addEventListener("click", () => {
     document.querySelector(".filter.active").classList.remove("active");
@@ -64,8 +69,9 @@ filterButtons.forEach(btn => {
   });
 });
 
-/* INITIAL LOAD */
-loadStatus();
-
-/* AUTO REFRESH kas 15 s */
-setInterval(loadStatus, 15000);
+/* INIT */
+(async () => {
+  await loadMeta();
+  await loadStatus();
+  setInterval(loadStatus, 15000);
+})();
